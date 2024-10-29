@@ -2,8 +2,10 @@ import requests
 import argparse
 
 
-API_URL = "http://127.0.0.1:5000"
+API_URL = ""
 SHARED_KEY = ""
+
+headers = {"Authorization": f"{SHARED_KEY}"}
 
 
 def create_contact(first_name, last_name, company, mobile_list, email, note):
@@ -15,7 +17,7 @@ def create_contact(first_name, last_name, company, mobile_list, email, note):
         "email": email,
         "note": note,
     }
-    response = requests.post(f"{API_URL}/create", json=contact_data)
+    response = requests.post(f"{API_URL}/create", json=contact_data, headers=headers)
     print(response.json())
 
 
@@ -31,13 +33,13 @@ def edit_contact(
         "email": email,
         "note": note,
     }
-    response = requests.put(f"{API_URL}/edit", json=contact_data)
+    response = requests.put(f"{API_URL}/edit", json=contact_data, headers=headers)
     print(response.json())
 
 
 def delete_contact(resource_name):
     response = requests.delete(
-        f"{API_URL}/delete", json={"resource_name": resource_name}
+        f"{API_URL}/delete", json={"resource_name": resource_name}, headers=headers
     )
     print(response.json())
 
