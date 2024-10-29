@@ -18,7 +18,8 @@ def create_contact(first_name, last_name, company, mobile_list, email, note):
         "note": note,
     }
     response = requests.post(f"{API_URL}/create", json=contact_data, headers=headers)
-    print(response.json())
+    response = response.json()
+    print(response["resource_name"])
 
 
 def edit_contact(
@@ -34,14 +35,20 @@ def edit_contact(
         "note": note,
     }
     response = requests.put(f"{API_URL}/edit", json=contact_data, headers=headers)
-    print(response.json())
+    if response.status_code == 200:
+        print(1)
+    else:
+        print(0)
 
 
 def delete_contact(resource_name):
     response = requests.delete(
         f"{API_URL}/delete", json={"resource_name": resource_name}, headers=headers
     )
-    print(response.json())
+    if response.status_code == 200:
+        print(1)
+    else:
+        print(0)
 
 
 def main():
